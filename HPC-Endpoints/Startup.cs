@@ -32,6 +32,7 @@ namespace HPC_Endpoints
             services.ConfigureRepositoryManager();
             services.ConfigureApplicationDomain();
             services.ConfigureMediatR();
+            services.ConfigureMapper();
             services.ConfigureCors();
             services.AddControllers();
             services.AddSwaggerGen(c =>

@@ -6,7 +6,7 @@ using Infrastructure.Commands.User;
 using Infrastructure.Mapper;
 using MediatR;
 
-namespace Infrastructure.Handlers.Commands.User
+namespace HPC_Endpoints.Handlers.Commands.User
 {
     public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, Guid>
     {

@@ -1,8 +1,10 @@
 ﻿using System;
 using ApplicationService.CommandHandlers;
+using ApplicationService.QueryHandlers;
 using Domain._Shared.Repositories;
 using Infrastructure.Data.DbContext;
 using Infrastructure.Data.Repositories;
+using Infrastructure.Mapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -42,8 +44,17 @@ namespace HPC_Endpoints.Extensions
         public static void ConfigureRepositoryManager(this IServiceCollection services) =>
             services.AddScoped<IRepositoryManager, RepositoryManager>();
 
-        public static void ConfigureApplicationDomain(this IServiceCollection services) =>
+        public static void ConfigureApplicationDomain(this IServiceCollection services)
+        {
             services.AddScoped<RegisterUserHandler>();
+            services.AddScoped<GetUserByIdHandler>();
+        }
+
+        public static void ConfigureMapper(this IServiceCollection services)
+        {
+            services.AddScoped<ICommandMapper, CommandMapper>();
+        }
+            
 
     }
 }

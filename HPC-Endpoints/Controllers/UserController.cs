@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
+using HPC_Endpoints.Queries;
 using Infrastructure.Commands.User;
-using Infrastructure.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,10 +24,10 @@ namespace HPC_Endpoints.Controllers
             return Ok(res);
         }
 
-        [HttpGet("/{id}")]
-        public async Task<IActionResult> GetUserById([FromQuery] GetUserByIdQuery query)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUserById([FromRoute] Guid id)
         {
-            var res = await _mediator.Send(query);
+            var res = await _mediator.Send(new GetUserByIdQuery(id));
             return Ok(res);
         }
     }

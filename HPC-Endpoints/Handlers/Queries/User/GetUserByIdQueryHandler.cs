@@ -3,10 +3,10 @@ using System.Threading.Tasks;
 using ApplicationService.QueryHandlers;
 using Domain._Shared.Repositories;
 using Domain.Queries;
-using Infrastructure.Queries;
+using HPC_Endpoints.Queries;
 using MediatR;
 
-namespace Infrastructure.Handlers.Queries.User
+namespace HPC_Endpoints.Handlers.Queries.User
 {
     public class GetUserByIdQueryHandler: IRequestHandler<GetUserByIdQuery, Domain.Entities.User>
     {

@@ -2,7 +2,7 @@
 using Domain.Entities;
 using MediatR;
 
-namespace Infrastructure.Queries
+namespace HPC_Endpoints.Queries
 {
     public class GetUserByIdQuery : IRequest<User>
     {
