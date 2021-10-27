@@ -4,4 +4,18 @@
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="Grant-SubDomain" />
+      <Folder Include="Host-SubDomain" />
+      <Folder Include="Payment-SubDomain" />
+      <Folder Include="Plan-SubDomain" />
+      <Folder Include="Setting-SubDomain" />
+      <Folder Include="Ticket-SubDomain" />
+      <Folder Include="VirtualMachine-SubDomain" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Framework\Framework.csproj" />
+    </ItemGroup>
+
 </Project>
