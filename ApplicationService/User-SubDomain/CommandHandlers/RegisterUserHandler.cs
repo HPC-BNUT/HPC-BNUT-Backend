@@ -8,7 +8,7 @@ using Framework.ApplicationService.CommandHandlers;
 
 namespace ApplicationService.CommandHandlers
 {
-    public class RegisterUserHandler : ICommandHandler<RegisterUser>
+    public class RegisterUserHandler : ICommandHandler<RegisterUser, Guid>
     {
         private readonly IRepositoryManager _repositoryManager;
         public RegisterUserHandler(IRepositoryManager repositoryManager)
@@ -16,14 +16,14 @@ namespace ApplicationService.CommandHandlers
             _repositoryManager = repositoryManager;
         }
         
-        public async Task Handle(RegisterUser command)
+        public async Task<Guid> Handle(RegisterUser command)
         {
-            if (await _repositoryManager.User.WithEmailExistAsync(command.Email))
+            if (await _repositoryManager.User.WithEmailExistAsync(Email.FromString(command.Email)))
             {
                 throw new InvalidOperationException($"User already exists with email \"{command.Email}\" .");
             }
-
-            if (await _repositoryManager.User.WithNationalIdExistAsync(command.NationalId))
+            
+            if (await _repositoryManager.User.WithNationalIdExistAsync(NationalId.FromString(command.NationalId)))
             {
                 throw new InvalidOperationException($"User already exists with nationalId \"{command.NationalId}\" .");
             }
@@ -35,6 +35,8 @@ namespace ApplicationService.CommandHandlers
             
             await _repositoryManager.User.CreateUserAsync(user);
             await _repositoryManager.SaveAsync();
+
+            return user.Id;
         }
     }
 }

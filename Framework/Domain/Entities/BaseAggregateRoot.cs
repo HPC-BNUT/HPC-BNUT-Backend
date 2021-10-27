@@ -7,16 +7,16 @@ namespace Framework.Domain.Entities
 {
     public abstract class BaseAggregateRoot<TId> where TId:IEquatable<TId>
     {
-        private readonly List<IEvent> _events;
+        private readonly List<IDomainEvent> _events;
         public TId Id { get; protected set; }
-        protected BaseAggregateRoot() => _events = new List<IEvent>();
-        protected void HandleEvent(IEvent @event)
+        protected BaseAggregateRoot() => _events = new List<IDomainEvent>();
+        protected void HandleEvent(IDomainEvent domainEvent)
         {
-            SetStateByEvent(@event);
+            SetStateByEvent(domainEvent);
             ValidateInvariants();
-            _events.Add(@event);
+            _events.Add(domainEvent);
         }
-        protected abstract void SetStateByEvent(IEvent @event);
+        protected abstract void SetStateByEvent(IDomainEvent domainEvent);
         public IEnumerable<object> GetEvents() => _events.AsEnumerable();
         public void ClearEvents() => _events.Clear();
         protected abstract void ValidateInvariants();

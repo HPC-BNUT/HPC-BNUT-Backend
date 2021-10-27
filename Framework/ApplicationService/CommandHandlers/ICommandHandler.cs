@@ -2,8 +2,8 @@
 
 namespace Framework.ApplicationService.CommandHandlers
 {
-    public interface ICommandHandler<TCommand>
+    public interface ICommandHandler<TCommand, TResponse>
     {
-        Task Handle(TCommand command);
+        Task<TResponse> Handle(TCommand command);
     }
 }

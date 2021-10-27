@@ -27,7 +27,11 @@ namespace HPC_Endpoints
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.ConfigureSqlContext(Configuration);
+            services.ConfigureRepositoryManager();
+            services.ConfigureApplicationDomain();
+            services.ConfigureMediatR();
             services.ConfigureCors();
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -47,6 +51,7 @@ namespace HPC_Endpoints
             }
 
             app.UseHttpsRedirection();
+            app.UseCors("CorsPolicy");
 
             app.UseRouting();
 

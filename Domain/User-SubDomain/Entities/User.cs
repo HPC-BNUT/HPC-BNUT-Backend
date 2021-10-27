@@ -41,9 +41,9 @@ namespace Domain.Entities
             });
         }
         
-        protected override void SetStateByEvent(IEvent @event)
+        protected override void SetStateByEvent(IDomainEvent domainEvent)
         {
-            switch (@event)
+            switch (domainEvent)
             {
                 case UserRegistered e:
                     Id = e.UserId;
@@ -51,6 +51,7 @@ namespace Domain.Entities
                     LastName = LastName.FromString(e.LastName);
                     Email = Email.FromString(e.Email);
                     RegistrationState = RegistrationState.WaitingForEmailVerification;
+                    NationalId =NationalId.FromString(e.NationalId);
                     break;
                 
                 case EmailVerified e:

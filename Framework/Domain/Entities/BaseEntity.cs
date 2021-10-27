@@ -6,9 +6,9 @@ namespace Framework.Domain.Entities
     public abstract class BaseEntity<TId> where TId : IEquatable<TId>
     {
         public TId Id { get; private set; }
-        private Action<IEvent> _applier;
+        private Action<IDomainEvent> _applier;
 
-        public BaseEntity(Action<IEvent> applier)
+        public BaseEntity(Action<IDomainEvent> applier)
         {
             _applier = applier;
         }
@@ -17,13 +17,13 @@ namespace Framework.Domain.Entities
         {
         }
 
-        public void HandleEvent(IEvent @event)
+        public void HandleEvent(IDomainEvent domainEvent)
         {
-            SetStateByEvent(@event);
-            _applier(@event);
+            SetStateByEvent(domainEvent);
+            _applier(domainEvent);
         }
 
-        protected abstract void SetStateByEvent(IEvent @event);
+        protected abstract void SetStateByEvent(IDomainEvent domainEvent);
 
         public override bool Equals(object obj)
         {
