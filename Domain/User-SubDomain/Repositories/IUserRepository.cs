@@ -8,7 +8,8 @@ namespace Domain.Repositories
     public interface IUserRepository
     {
         public Task CreateUserAsync(User user);
-        public Task<User> GetUserAsync(Guid userId, bool trackChanges);
+        public Task<User> GetUserByIdAsync(Guid userId, bool trackChanges);
+        public Task<User> GetUserByEmailAsync(Email email, bool trackChanges);
         public Task<bool> WithEmailExistAsync(Email email);
         public Task<bool> WithNationalIdExistAsync(NationalId nationalId);
     }

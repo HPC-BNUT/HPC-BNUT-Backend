@@ -22,5 +22,16 @@ namespace Infrastructure.Commands.User
         [MinLength(3)]
         [RegularExpression(@"\d{3}")]
         public string NationalId { get; set; }
+
+        [Required]
+        [MinLength(6)]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+        
+        [Required]
+        [MinLength(6)]
+        [DataType(DataType.Password)]
+        [Compare("Password")]
+        public string ConfirmPassword { get; set; }
     }
 }

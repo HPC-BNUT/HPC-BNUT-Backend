@@ -31,7 +31,8 @@ namespace ApplicationService.CommandHandlers
             var user = new User( FirstName.FromString(command.FirstName),
                 LastName.FromString(command.LastName),
                 Email.FromString(command.Email),
-                NationalId.FromString(command.NationalId));
+                NationalId.FromString(command.NationalId),
+                PasswordHash.FromHashedString(command.PasswordHash));
             
             await _repositoryManager.User.CreateUserAsync(user);
             await _repositoryManager.SaveAsync();

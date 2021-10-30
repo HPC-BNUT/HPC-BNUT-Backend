@@ -14,6 +14,8 @@ namespace Infrastructure.Data.EntitiesConfig
             builder.Property(u => u.LastName).HasConversion(x => x.Value, d => LastName.FromString(d));
             builder.Property(u => u.NationalId).HasConversion(x => x.Value, d => NationalId.FromString(d));
             builder.Property(u => u.PhoneNumber).HasConversion(x => x.Value, d => PhoneNumber.FromString(d));
+            builder.Property(u => u.PasswordHash).HasConversion(x => x.Value, d => PasswordHash.FromHashedString(d));
+            builder.Property(u => u.LastLoginDateTime).HasConversion(x => x.Value, d => LastLoginDateTime.FromDateTime(d));
         }
     }
 }

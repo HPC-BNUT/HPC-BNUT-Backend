@@ -7,7 +7,12 @@ namespace Infrastructure.Mapper
     {
         public RegisterUser MapRegisterUserCommand(RegisterUserCommand command)
         {
-            return RegisterUser.Create(command.FirstName, command.LastName, command.Email, command.NationalId);
+            return RegisterUser.Create(command.FirstName, command.LastName, command.Email, command.NationalId, command.Password);
+        }
+
+        public LoginUser MapLoginUserCommand(LoginUserCommand command)
+        {
+            return LoginUser.Create(command.Email, command.Password);
         }
     }
 }

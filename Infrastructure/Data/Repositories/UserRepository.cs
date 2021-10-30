@@ -20,10 +20,15 @@ namespace Infrastructure.Data.Repositories
             await CreateAsync(user);
         }
 
-        public async Task<User> GetUserAsync(Guid userId, bool trackChanges)
+        public async Task<User> GetUserByIdAsync(Guid userId, bool trackChanges)
             =>
                 await FindByCondition(c => c.Id.Equals(userId), trackChanges)
                     .SingleOrDefaultAsync();
+
+        public async Task<User> GetUserByEmailAsync(Email email, bool trackChanges)
+            => await FindByCondition(c => c.Email.Equals(email), trackChanges: trackChanges)
+                .SingleOrDefaultAsync();
+        
 
 
         public async Task<bool> WithEmailExistAsync(Email email)

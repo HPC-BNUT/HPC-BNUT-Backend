@@ -6,5 +6,6 @@ namespace Infrastructure.Mapper
     public interface ICommandMapper
     {
         RegisterUser MapRegisterUserCommand(RegisterUserCommand command);
+        LoginUser MapLoginUserCommand(LoginUserCommand command);
     }
 }

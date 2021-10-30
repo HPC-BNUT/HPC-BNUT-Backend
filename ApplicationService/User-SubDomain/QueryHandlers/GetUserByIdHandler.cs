@@ -16,7 +16,7 @@ namespace ApplicationService.QueryHandlers
         
         public async Task<User> Handle(GetUserById query)
         {
-            var user = await _repositoryManager.User.GetUserAsync(query.UserId, trackChanges: false);
+            var user = await _repositoryManager.User.GetUserByIdAsync(query.UserId, trackChanges: false);
             return user;
         }
     }
