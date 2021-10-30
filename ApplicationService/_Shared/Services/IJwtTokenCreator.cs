@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
 
-namespace Infrastructure
+namespace ApplicationService._Shared.Services
 {
     public interface IJwtTokenCreator
     {

@@ -3,15 +3,17 @@ using System;
 using Infrastructure.Data.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(PgSqlDbContext))]
-    partial class PgSqlDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211030171926_refreshtokenextime add to user")]
+    partial class refreshtokenextimeaddtouser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

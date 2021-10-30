@@ -1,12 +1,12 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using ApplicationService._Shared.Services;
 using MediatR;
 
 namespace Infrastructure.Commands.User
 {
-    public class RegisterUserCommand : IRequest<Guid>
+    public class RegisterUserCommand : IRequest<PairToken>
     {
-        [Required]
+        [Required(ErrorMessage = "this shit is required.")]
         [MaxLength(255)]
         public string FirstName { get; set; }
         

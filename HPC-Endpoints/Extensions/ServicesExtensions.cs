@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using ApplicationService._Shared.Services;
 using ApplicationService.CommandHandlers;
 using ApplicationService.QueryHandlers;
 using Domain._Shared.Repositories;
@@ -54,13 +55,16 @@ namespace HPC_Endpoints.Extensions
         public static void ConfigureApplicationDomain(this IServiceCollection services)
         {
             services.AddScoped<RegisterUserHandler>();
-            services.AddScoped<GetUserByIdHandler>();
+            services.AddScoped<GetUserByEmailHandler>();
             services.AddScoped<LoginUserHandler>();
+            services.AddScoped<RefreshUserHandler>();
         }
 
         public static void ConfigureMapper(this IServiceCollection services)
         {
             services.AddScoped<ICommandMapper, CommandMapper>();
+            services.AddScoped<IQueryMapper, QueryMapper>();
+            services.AddScoped<IDtoMapper, DtoMapper>();
         }
           
         public static void AddJwt(this IServiceCollection services)

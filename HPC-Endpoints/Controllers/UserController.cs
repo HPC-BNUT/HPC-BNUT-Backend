@@ -1,7 +1,13 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
-using HPC_Endpoints.Queries;
+using ApplicationService._Shared.Services;
+using Framework.Domain.Exceptions;
 using Infrastructure.Commands.User;
+using Infrastructure.DataTransferObjects;
+using Infrastructure.Exceptions;
+using Infrastructure.Queries;
+using Infrastructure.StandardResult;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,34 +15,32 @@ using Microsoft.AspNetCore.Mvc;
 namespace HPC_Endpoints.Controllers
 {
     [ApiController]
-    [Route("api/users")]
+    [ApiResultFilter]
+    [Route("api/users/[action]")]
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
+
         public UserController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
-        [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterUserCommand command)
-        {
-            var res = await _mediator.Send(command);
-            return Ok(res);
-        }
-
-        [HttpGet("{id}"), Authorize]
-        public async Task<IActionResult> GetUserById([FromRoute] Guid id)
-        {
-            var res = await _mediator.Send(new GetUserByIdQuery(id));
-            return Ok(res);
-        }
-
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginUserCommand command)
-        {
-            var res = await _mediator.Send(command);
-            return Ok(res);
-        }
+        [HttpPost]
+        public async Task<ApiResult<PairToken>> Register([FromBody] RegisterUserCommand command)
+            => //await _mediator.Send(command);
+                throw new AppException(null, "helo");
+        
+        [HttpGet, Authorize]
+        public async Task<ApiResult<UserDto>> GetUserInfo()
+            => await _mediator.Send(new GetUserByEmailQuery(HttpContext.User.Identity.Name));
+        
+        [HttpPost]
+        public async Task<ApiResult<PairToken>> Login([FromBody] LoginUserCommand command)
+            => await _mediator.Send(command);
+        
+        [HttpPost]
+        public async Task<ApiResult<PairToken>> Refresh([FromBody] RefreshUserCommand command)
+            => await _mediator.Send(command);
     }
 }

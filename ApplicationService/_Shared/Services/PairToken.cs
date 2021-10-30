@@ -1,4 +1,4 @@
-﻿namespace Infrastructure
+﻿namespace ApplicationService._Shared.Services
 {
     public class PairToken
     {

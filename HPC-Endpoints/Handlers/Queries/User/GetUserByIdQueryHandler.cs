@@ -1,26 +1,31 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using ApplicationService.QueryHandlers;
-using Domain._Shared.Repositories;
-using Domain.Queries;
-using HPC_Endpoints.Queries;
+using Infrastructure.DataTransferObjects;
+using Infrastructure.Mapper;
+using Infrastructure.Queries;
 using MediatR;
 
 namespace HPC_Endpoints.Handlers.Queries.User
 {
-    public class GetUserByIdQueryHandler: IRequestHandler<GetUserByIdQuery, Domain.Entities.User>
+    public class GetUserByIdQueryHandler: IRequestHandler<GetUserByEmailQuery, UserDto>
     {
-        private readonly GetUserByIdHandler _domainHandler;
-        public GetUserByIdQueryHandler(IRepositoryManager repositoryManager, GetUserByIdHandler domainHandler)
+        private readonly GetUserByEmailHandler _getUserByEmailHandler;
+        private readonly IQueryMapper _queryMapper;
+        private readonly IDtoMapper _dtoMapper;
+        public GetUserByIdQueryHandler(GetUserByEmailHandler getUserByEmailHandler, IQueryMapper queryMapper, IDtoMapper dtoMapper)
         {
-            _domainHandler = domainHandler;
+            _getUserByEmailHandler = getUserByEmailHandler;
+            _queryMapper = queryMapper;
+            _dtoMapper = dtoMapper;
         }
         
-        public async Task<Domain.Entities.User> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
+        public async Task<UserDto> Handle(GetUserByEmailQuery request, CancellationToken cancellationToken)
         {
-            var domainRequest = new GetUserById(request.UserId);
-            var res = await _domainHandler.Handle(domainRequest);
-            return res;
+            var domainRequest = _queryMapper.MapToGetUserByEmail(request);
+            var res = await _getUserByEmailHandler.Handle(domainRequest);
+            var dto = _dtoMapper.MapToUserDto(res);
+            return dto;
         }
     }
 }

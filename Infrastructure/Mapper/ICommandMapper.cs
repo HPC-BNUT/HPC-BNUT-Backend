@@ -7,5 +7,6 @@ namespace Infrastructure.Mapper
     {
         RegisterUser MapRegisterUserCommand(RegisterUserCommand command);
         LoginUser MapLoginUserCommand(LoginUserCommand command);
+        RefreshUser MapRefreshUserCommand(RefreshUserCommand command);
     }
 }

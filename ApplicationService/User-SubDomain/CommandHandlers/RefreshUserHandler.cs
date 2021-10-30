@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Authentication;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using ApplicationService._Shared.Services;
@@ -12,31 +11,36 @@ using Framework.ApplicationService.CommandHandlers;
 
 namespace ApplicationService.CommandHandlers
 {
-    public class LoginUserHandler : ICommandHandler<LoginUser, PairToken>
+    public class RefreshUserHandler : ICommandHandler<RefreshUser, PairToken>
     {
-        private readonly IRepositoryManager _repositoryManager;
         private readonly IJwtTokenCreator _jwtTokenCreator;
+        private readonly IRepositoryManager _repositoryManager;
 
-        public LoginUserHandler(IRepositoryManager repositoryManager, IJwtTokenCreator jwtTokenCreator)
+        public RefreshUserHandler(IJwtTokenCreator jwtTokenCreator, IRepositoryManager repositoryManager)
         {
-            _repositoryManager = repositoryManager;
             _jwtTokenCreator = jwtTokenCreator;
+            _repositoryManager = repositoryManager;
         }
 
-        public async Task<PairToken> Handle(LoginUser command)
+        public async Task<PairToken> Handle(RefreshUser command)
         {
-            var user = await _repositoryManager.User.GetUserByEmailAsync(command.Email, trackChanges: true);
+            var principles = _jwtTokenCreator.GetPrincipalFromExpiredToken(command.AccessToken);
+            var user = await _repositoryManager.User.GetUserByEmailAsync(Email.FromString(principles.Identity.Name),
+                trackChanges: true);
 
             if (user is null)
-                throw new InvalidCredentialException("Credentials are incorrect");
+            {
+                throw new ArgumentException("Credentials are incorrect.");
+            }
 
-            user.CheckPassword(command.PasswordHash);
+            user.CheckRefreshTokenHash(RefreshTokenHash.FromNotHashedString(command.RefreshToken));
             var tokens = GetNewTokens(user);
 
             user.Login(RefreshTokenHash.FromNotHashedString(tokens.RefreshToken),
                 RefreshTokenExpireTime.FromDateTime(DateTime.UtcNow.AddDays(_jwtTokenCreator.GetRefreshTokenExTime())));
             
             await _repositoryManager.SaveAsync();
+
             return tokens;
         }
 

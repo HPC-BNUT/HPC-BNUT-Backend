@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using ApplicationService._Shared.Services;
 using MediatR;
 
 namespace Infrastructure.Commands.User

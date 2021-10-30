@@ -7,5 +7,7 @@ namespace Domain.Events
     {
         public Guid UserId { get; set; }
         public DateTime LastLoginDateTime { get; set; }
+        public string RefreshTokenHash { get; set; }
+        public DateTime RefreshTokenExpireTime { get; set; }
     }
 }

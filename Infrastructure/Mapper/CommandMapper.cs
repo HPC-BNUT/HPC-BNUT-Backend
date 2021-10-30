@@ -14,5 +14,10 @@ namespace Infrastructure.Mapper
         {
             return LoginUser.Create(command.Email, command.Password);
         }
+
+        public RefreshUser MapRefreshUserCommand(RefreshUserCommand command)
+        {
+            return RefreshUser.Create(command.AccessToken, command.RefreshToken);
+        }
     }
 }
