@@ -1,7 +1,7 @@
 ﻿using System;
-using Infrastructure.StandardResult;
+using Framework.Enums;
 
-namespace Infrastructure.Exceptions
+namespace Framework.Exceptions
 {
     public class NotFoundException : AppException
     {

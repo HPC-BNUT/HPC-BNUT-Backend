@@ -2,6 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 using Framework.Domain.ValueObjects;
+using Framework.Exceptions;
 
 namespace Domain.ValueObjects
 {
@@ -28,7 +29,7 @@ namespace Domain.ValueObjects
         {
             if (hashedString.Length < 5)
             {
-                throw new ArgumentException("Password is too short must be more than 5 characters.");
+                throw new BadRequestException("Password is too short must be more than 5 characters.");
             }
 
             Value = hashedString;

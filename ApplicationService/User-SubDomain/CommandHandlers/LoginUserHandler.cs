@@ -9,6 +9,7 @@ using Domain.Commands;
 using Domain.Entities;
 using Domain.ValueObjects;
 using Framework.ApplicationService.CommandHandlers;
+using Framework.Exceptions;
 
 namespace ApplicationService.CommandHandlers
 {
@@ -28,7 +29,7 @@ namespace ApplicationService.CommandHandlers
             var user = await _repositoryManager.User.GetUserByEmailAsync(command.Email, trackChanges: true);
 
             if (user is null)
-                throw new InvalidCredentialException("Credentials are incorrect");
+                throw new NotFoundException("Credentials are incorrect");
 
             user.CheckPassword(command.PasswordHash);
             var tokens = GetNewTokens(user);

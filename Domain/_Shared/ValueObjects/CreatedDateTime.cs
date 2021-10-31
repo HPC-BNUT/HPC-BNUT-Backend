@@ -1,6 +1,7 @@
 ﻿using System;
 using Domain.ValueObjects;
 using Framework.Domain.ValueObjects;
+using Framework.Exceptions;
 
 namespace Domain._Shared.ValueObjects
 {
@@ -20,7 +21,7 @@ namespace Domain._Shared.ValueObjects
         {
             if (value > DateTime.UtcNow)
             {
-                throw new ArgumentOutOfRangeException(nameof(value), "create date can not be in the future.");
+                throw new BadRequestException("create date can not be in the future.");
             }
             
             Value = value;

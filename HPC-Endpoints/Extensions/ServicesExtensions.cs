@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using ApplicationService._Shared.Services;
 using ApplicationService.CommandHandlers;
 using ApplicationService.QueryHandlers;
 using Domain._Shared.Repositories;
+using Framework.Enums;
+using Framework.Exceptions;
 using Infrastructure;
 using Infrastructure.Data.DbContext;
 using Infrastructure.Data.Repositories;
@@ -108,7 +111,8 @@ namespace HPC_Endpoints.Extensions
                     options.Events = new JwtBearerEvents
                     {
                         OnAuthenticationFailed = context => Task.CompletedTask,
-                        OnChallenge = context => Task.CompletedTask,
+                        OnChallenge = context => throw new AppException(ApiResultStatusCode.UnAuthorized, "Please provide a valid token.",
+                            HttpStatusCode.Unauthorized),
                         OnForbidden = context => Task.CompletedTask,
                         OnMessageReceived = context => Task.CompletedTask,
                         OnTokenValidated = context => Task.CompletedTask,

@@ -8,6 +8,7 @@ using Domain.Commands;
 using Domain.Entities;
 using Domain.ValueObjects;
 using Framework.ApplicationService.CommandHandlers;
+using Framework.Exceptions;
 
 namespace ApplicationService.CommandHandlers
 {
@@ -30,7 +31,7 @@ namespace ApplicationService.CommandHandlers
 
             if (user is null)
             {
-                throw new ArgumentException("Credentials are incorrect.");
+                throw new NotFoundException("Credentials are incorrect.");
             }
 
             user.CheckRefreshTokenHash(RefreshTokenHash.FromNotHashedString(command.RefreshToken));

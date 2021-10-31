@@ -1,5 +1,6 @@
 ﻿using System;
 using Framework.Domain.ValueObjects;
+using Framework.Exceptions;
 
 namespace Domain.ValueObjects
 {
@@ -19,7 +20,7 @@ namespace Domain.ValueObjects
         {
             if (value < DateTime.UtcNow)
             {
-                throw new ArgumentOutOfRangeException(nameof(value), "Last login date can not be in the past.");
+                throw new BadRequestException("Last login date can not be in the past.");
             }
             
             Value = value;

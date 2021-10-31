@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Net;
-using Infrastructure.StandardResult;
+using Framework.Enums;
 
-namespace Infrastructure.Exceptions
+namespace Framework.Exceptions
 {
     public class AppException : Exception
     {

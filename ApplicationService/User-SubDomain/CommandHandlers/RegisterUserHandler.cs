@@ -8,6 +8,7 @@ using Domain.Commands;
 using Domain.Entities;
 using Domain.ValueObjects;
 using Framework.ApplicationService.CommandHandlers;
+using Framework.Exceptions;
 
 namespace ApplicationService.CommandHandlers
 {
@@ -25,12 +26,12 @@ namespace ApplicationService.CommandHandlers
         {
             if (await _repositoryManager.User.WithEmailExistAsync(Email.FromString(command.Email)))
             {
-                throw new InvalidOperationException($"User already exists with email \"{command.Email}\" .");
+                throw new BadRequestException($"User already exists with email: {command.Email.Value}.");
             }
             
             if (await _repositoryManager.User.WithNationalIdExistAsync(NationalId.FromString(command.NationalId)))
             {
-                throw new InvalidOperationException($"User already exists with nationalId \"{command.NationalId}\" .");
+                throw new BadRequestException($"User already exists with nationalId: {command.NationalId.Value} .");
             }
 
             var user = new User( FirstName.FromString(command.FirstName),

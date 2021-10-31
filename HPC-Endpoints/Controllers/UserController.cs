@@ -1,11 +1,7 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using ApplicationService._Shared.Services;
-using Framework.Domain.Exceptions;
 using Infrastructure.Commands.User;
 using Infrastructure.DataTransferObjects;
-using Infrastructure.Exceptions;
 using Infrastructure.Queries;
 using Infrastructure.StandardResult;
 using MediatR;
@@ -28,8 +24,7 @@ namespace HPC_Endpoints.Controllers
 
         [HttpPost]
         public async Task<ApiResult<PairToken>> Register([FromBody] RegisterUserCommand command)
-            => //await _mediator.Send(command);
-                throw new AppException(null, "helo");
+            => await _mediator.Send(command);
         
         [HttpGet, Authorize]
         public async Task<ApiResult<UserDto>> GetUserInfo()

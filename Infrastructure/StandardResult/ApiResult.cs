@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Framework.Enums;
 using Framework.Tools;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -17,7 +18,12 @@ namespace Infrastructure.StandardResult
         {
             IsSuccess = isSuccess;
             StatusCode = statusCode;
-            Message = message ?? statusCode.ToDisplay();
+            Message = statusCode.ToDisplay() + " " + message;
+        }
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
         }
 
         #region Implicit Operators

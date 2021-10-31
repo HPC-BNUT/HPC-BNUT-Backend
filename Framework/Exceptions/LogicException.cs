@@ -1,7 +1,9 @@
 ﻿using System;
-using Infrastructure.StandardResult;
+using System.Net;
+using Framework.Domain.ValueObjects;
+using Framework.Enums;
 
-namespace Infrastructure.Exceptions
+namespace Framework.Exceptions
 {
     public class LogicException : AppException
     {
@@ -34,5 +36,6 @@ namespace Infrastructure.Exceptions
             : base(ApiResultStatusCode.LogicError, message, exception, additionalData)
         {
         }
+        
     }
 }

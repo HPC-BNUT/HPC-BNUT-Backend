@@ -1,5 +1,6 @@
 ﻿using System;
 using Framework.Domain.ValueObjects;
+using Framework.Exceptions;
 
 namespace Domain.ValueObjects
 {
@@ -16,7 +17,7 @@ namespace Domain.ValueObjects
         {
             if (string.IsNullOrEmpty(value))
             {
-                throw new ArgumentException("FirstName can not be null.", nameof(value));
+                throw new BadRequestException("FirstName can not be null.");
             }
             
             Value = value;

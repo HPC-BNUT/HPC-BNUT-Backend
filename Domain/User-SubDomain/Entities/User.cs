@@ -6,6 +6,7 @@ using Domain.ValueObjects;
 using Framework.Domain.Entities;
 using Framework.Domain.Events;
 using Framework.Domain.Exceptions;
+using Framework.Exceptions;
 
 namespace Domain.Entities
 {
@@ -46,13 +47,13 @@ namespace Domain.Entities
         public void CheckPassword(PasswordHash passwordHash)
         {
             if (!PasswordHash.Equals(passwordHash))
-                throw new InvalidCredentialException("Credentials  are incorrect.");
+                throw new BadRequestException("Credentials  are incorrect.");
         }
 
         public void CheckRefreshTokenHash(RefreshTokenHash refreshTokenHash)
         {
             if (!RefreshTokenHash.Equals(refreshTokenHash))
-                throw new InvalidCredentialException("Credentials  are incorrect.");
+                throw new BadRequestException("Credentials  are incorrect.");
         }
 
         public void Login(RefreshTokenHash refreshTokenHash, RefreshTokenExpireTime refreshTokenExpireTime)
@@ -103,7 +104,7 @@ namespace Domain.Entities
                     break;
 
                 default:
-                    throw new InvalidOperationException("Can not do what you request.");
+                    throw new LogicException("Can not do what you request.");
             }
         }
 
@@ -123,8 +124,7 @@ namespace Domain.Entities
 
             if (!isValid)
             {
-                throw new InvalidEntityStateException(this,
-                    $"User {Id} is in wrong state.");
+                throw new LogicException($"User {Id} is in wrong state.");
             }
         }
     }

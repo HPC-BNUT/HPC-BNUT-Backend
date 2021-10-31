@@ -1,4 +1,7 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Framework.Enums;
+using Framework.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -25,12 +28,9 @@ namespace Infrastructure.StandardResult
             }
             else if (context.Result is BadRequestObjectResult badRequestObjectResult)
             {
-                var message = badRequestObjectResult.Value.ToString();
-                if (badRequestObjectResult.Value is SerializableError errors)
-                {
-                    var errorMessages = errors.SelectMany(p => (string[])p.Value).Distinct();
-                    message = string.Join(" | ", errorMessages);
-                }
+                var errs = context.ModelState.Values;
+                var list = (from err in errs from innerError in err.Errors select innerError.ErrorMessage).ToList();
+                var message = string.Join(" | ", list);
                 var apiResult = new ApiResult(false, ApiResultStatusCode.BadRequest, message);
                 context.Result = new JsonResult(apiResult) { StatusCode = badRequestObjectResult.StatusCode };
             }

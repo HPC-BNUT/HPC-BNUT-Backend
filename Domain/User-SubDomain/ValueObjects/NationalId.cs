@@ -1,5 +1,6 @@
 ﻿using System;
 using Framework.Domain.ValueObjects;
+using Framework.Exceptions;
 
 namespace Domain.ValueObjects
 {
@@ -17,7 +18,7 @@ namespace Domain.ValueObjects
         {
             if (string.IsNullOrWhiteSpace(value))
             {
-                throw new ArgumentException("NationalId can not be null.", nameof(value));
+                throw new BadRequestException("NationalId can not be null.");
             }
 
             Value = value;
