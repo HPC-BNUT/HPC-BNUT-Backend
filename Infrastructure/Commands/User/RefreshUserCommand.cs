@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using ApplicationService._Shared.Models;
 using ApplicationService._Shared.Services;
 using MediatR;
 

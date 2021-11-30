@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using ApplicationService._Shared.Models;
 using ApplicationService._Shared.Services;
 using Domain._Shared.Repositories;
 using Domain.Commands;
@@ -14,8 +15,9 @@ namespace ApplicationService.CommandHandlers
 {
     public class RefreshUserHandler : ICommandHandler<RefreshUser, PairToken>
     {
-        private readonly IJwtTokenCreator _jwtTokenCreator;
+        
         private readonly IRepositoryManager _repositoryManager;
+        private readonly IJwtTokenCreator _jwtTokenCreator;
 
         public RefreshUserHandler(IJwtTokenCreator jwtTokenCreator, IRepositoryManager repositoryManager)
         {
@@ -44,7 +46,7 @@ namespace ApplicationService.CommandHandlers
 
             return tokens;
         }
-
+        
         #region privates
 
         private PairToken GetNewTokens(User user)
@@ -53,6 +55,7 @@ namespace ApplicationService.CommandHandlers
             {
                 new(ClaimTypes.Name, user.Email),
                 new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new (ClaimTypes.Role, user.UserRole == UserRole.User?"User":"Admin")
             };
 
             var pairTokens = new PairToken()
@@ -65,5 +68,6 @@ namespace ApplicationService.CommandHandlers
         }
 
         #endregion
+        
     }
 }

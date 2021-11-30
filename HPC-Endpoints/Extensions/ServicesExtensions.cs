@@ -41,7 +41,7 @@ namespace HPC_Endpoints.Extensions
             IConfiguration configuration)
         {
             var cs1 = Environment.GetEnvironmentVariable("PgSqlConnection");
-            var cs2 = configuration.GetConnectionString("PgSqlConnection");
+            var cs2 = configuration.GetConnectionString("Docker-PgSqlConnection");
             services.AddDbContext<PgSqlDbContext>(opts =>
                 opts.UseNpgsql(cs2, b =>
                     b.MigrationsAssembly("Infrastructure")));
@@ -110,10 +110,12 @@ namespace HPC_Endpoints.Extensions
                     options.TokenValidationParameters = validationParameters;
                     options.Events = new JwtBearerEvents
                     {
-                        OnAuthenticationFailed = context => Task.CompletedTask,
-                        OnChallenge = context => throw new AppException(ApiResultStatusCode.UnAuthorized, "Please provide a valid token.",
+                        OnAuthenticationFailed = context => throw new AppException(ApiResultStatusCode.UnAuthorized, "fucked",
                             HttpStatusCode.Unauthorized),
-                        OnForbidden = context => Task.CompletedTask,
+                        OnChallenge = context => throw new AppException(ApiResultStatusCode.UnAuthorized, "Access Token is not valid.",
+                            HttpStatusCode.Unauthorized),
+                        OnForbidden = context => throw new AppException(ApiResultStatusCode.UnAuthorized, "Permission denied.",
+                            HttpStatusCode.Forbidden),
                         OnMessageReceived = context => Task.CompletedTask,
                         OnTokenValidated = context => Task.CompletedTask,
                     };

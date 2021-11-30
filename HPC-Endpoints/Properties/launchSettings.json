@@ -9,7 +9,8 @@
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "PgSqlConnection":"Host=localhost;Port=5432;Database=HPC;Username=postgres;Password=aminnami1377"
+        "PgSqlConnection":"Host=localhost;Port=5432;Database=HPC;Username=postgres;Password=aminnami1377",
+        "DeployIP": "https://localhost:5001"
       }
     }
   }

@@ -1,11 +1,10 @@
-﻿using System;
-using System.Net;
-using Framework.Enums;
+﻿using System.Net;
 using Framework.Exceptions;
 using Infrastructure.StandardResult;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
+using Serilog;
 
 namespace HPC_Endpoints.MiddleWares
 {
@@ -17,8 +16,10 @@ namespace HPC_Endpoints.MiddleWares
             {
                 appError.Run(async context =>
                 {
-                    
+                    var logger = Log.Logger;
                     var ex = context.Features.Get<IExceptionHandlerFeature>().Error;
+                    logger.Debug(ex.ToString());
+                    
                     if (ex is LogicException logicEx)
                     {
                         context.Response.StatusCode = (int) HttpStatusCode.Conflict;

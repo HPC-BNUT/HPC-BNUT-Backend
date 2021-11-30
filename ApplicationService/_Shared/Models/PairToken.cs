@@ -1,4 +1,4 @@
-﻿namespace ApplicationService._Shared.Services
+﻿namespace ApplicationService._Shared.Models
 {
     public class PairToken
     {

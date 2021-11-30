@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using ApplicationService._Shared.Models;
 using ApplicationService._Shared.Services;
 using Infrastructure.Commands.User;
 using Infrastructure.DataTransferObjects;

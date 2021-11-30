@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
+using ApplicationService._Shared.Models;
 using ApplicationService._Shared.Services;
 using ApplicationService.CommandHandlers;
 using Infrastructure;

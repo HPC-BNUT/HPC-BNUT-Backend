@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Events;
 
 namespace HPC_Endpoints
 {
@@ -18,6 +20,19 @@ namespace HPC_Endpoints
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+                .UseSerilog((context, configuration) =>
+                {
+                    configuration.Enrich.FromLogContext()
+                        .Enrich.WithMachineName()
+                        .WriteTo.Conditional(e => e.Level == LogEventLevel.Error, wt => wt.Console())
+                        .Enrich.WithProperty("Environment", Environment.MachineName)
+                        .ReadFrom.Configuration(context.Configuration);
+                })
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                    //webBuilder.UseUrls(Environment.GetEnvironmentVariable("DeployIP"));
+                    //webBuilder.UseUrls("http://0.0.0.0:5001");
+                });
     }
 }

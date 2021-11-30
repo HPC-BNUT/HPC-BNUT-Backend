@@ -12,7 +12,6 @@
       <Folder Include="Setting-SubDomain" />
       <Folder Include="Ticket-SubDomain" />
       <Folder Include="VirtualMachine-SubDomain" />
-      <Folder Include="_Shared\Models" />
     </ItemGroup>
 
     <ItemGroup>
